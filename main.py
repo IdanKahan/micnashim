@@ -1,8 +1,6 @@
 
 
 
-bot_token = os.environ.get('bot_token')
-api_key = os.environ.get('api_key')
 
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
@@ -16,6 +14,10 @@ from pydub import AudioSegment
 import asyncio
 from datetime import datetime, timedelta
 from webserver import keep_alive
+import os
+bot_token = os.environ.get('bot_token')
+api_key = os.environ.get('api_key')
+
 
 # Assume api_key and bot_token are defined elsewhere
 # api_key = 'your_weatherapi_key'
