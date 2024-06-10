@@ -6,4 +6,3 @@ numpy
 ffmpeg-python
 pydub
 flask
-os
