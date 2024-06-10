@@ -80,20 +80,20 @@ def generate_video(weather_data):
 
     # Define decision based on temperature
     if temperature >= 30:
-        decision = "חם רצח עדיף לבוא ערום"[::-1]
+        decision = "חם רצח עדיף לבוא ערום"
         sound_effect = "hot.mp3"  # You need to provide this audio file
     elif temperature >= 24:
-        decision = "כן, חם אחושרמוטה"[::-1]
+        decision = "כן, חם אחושרמוטה"
         sound_effect = "very_hot.mp3"  # You need to provide this audio file
     elif temperature < 15:
-        decision = "נו וואי ברא, קפוא רצח"[::-1]
+        decision = "נו וואי ברא, קפוא רצח"
         sound_effect = "cold.mp3"  # You need to provide this audio file
     else:
-        decision = "לא, קר נודר נדר"[::-1]
+        decision = "לא, קר נודר נדר"
         sound_effect = "not_hot.mp3"  # You need to provide this audio file
 
     # Create images with text
-    question_image = create_image("ללבוש מכנסים קצרים היום?"[::-1])
+    question_image = create_image("ללבוש מכנסים קצרים היום?")
     answer_image = create_image(decision)
     background_image = create_image("")  # Blank background
 
@@ -105,6 +105,7 @@ def generate_video(weather_data):
     final_video_path = add_audio_effects(video_path, sound_effect)
 
     return final_video_path
+
 
 
 # Function to create an image with text
