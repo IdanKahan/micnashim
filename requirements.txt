@@ -1,0 +1,8 @@
+Pillow
+discord.py
+requests
+opencv-python
+numpy
+ffmpeg-python
+pydub
+flask
