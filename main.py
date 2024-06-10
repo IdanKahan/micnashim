@@ -106,6 +106,7 @@ def generate_video(weather_data):
 
     return final_video_path
 
+
 # Function to create an image with text
 def create_image(text):
     # Create image
