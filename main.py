@@ -1,7 +1,3 @@
-
-
-
-
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 import discord
@@ -15,13 +11,9 @@ import asyncio
 from datetime import datetime, timedelta
 from webserver import keep_alive
 import os
+
 bot_token = os.environ.get('bot_token')
 api_key = os.environ.get('api_key')
-
-
-# Assume api_key and bot_token are defined elsewhere
-# api_key = 'your_weatherapi_key'
-# bot_token = 'your_discord_bot_token'
 
 # Define all intents
 intents = discord.Intents().all()
@@ -105,8 +97,6 @@ def generate_video(weather_data):
     final_video_path = add_audio_effects(video_path, sound_effect)
 
     return final_video_path
-
-
 
 # Function to create an image with text
 def create_image(text):
@@ -215,8 +205,12 @@ async def daily_shorts():
         # Repair the video to ensure it works on Discord
         repaired_video_path = repair_video(video_path)
 
-        # Send video as a message
+        # Send video as a message with the specified text
+        date_str = datetime.utcnow().strftime("%Y-%m-%d")
+        await channel.send("----------------------------------------------------")
+        await channel.send(f"                                    {date_str}                                      ")
         await channel.send(file=discord.File(repaired_video_path))
+
 keep_alive()
 
 # Run the bot
