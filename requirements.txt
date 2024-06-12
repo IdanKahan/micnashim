@@ -1,8 +1,6 @@
-Pillow
 discord.py
+discord-ext-bot
 requests
-opencv-python
-numpy
-ffmpeg-python
-pydub
-flask
+Flask
+datetime
+asyncio
