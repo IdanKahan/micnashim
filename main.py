@@ -71,7 +71,7 @@ def get_video_path(temperature):
 @tasks.loop(hours=24)
 async def daily_shorts():
     now = datetime.utcnow()
-    target_time = datetime.combine(now.date(), datetime.strptime("07:00:00", "%H:%M:%S").time())
+    target_time = datetime.combine(now.date(), datetime.strptime("04:00:00", "%H:%M:%S").time())
     if now > target_time:
         target_time += timedelta(days=1)
     await asyncio.sleep((target_time - now).total_seconds())
