@@ -122,7 +122,6 @@ async def daily_shorts():
         # Send the video as a message with the specified text
         formatted_date = datetime.strptime(forecast_date, "%Y-%m-%d").strftime("%d/%m/%Y")
         await channel.send(f"{formatted_date}")
-        await channel.send(f"Average temperature: {average_temp:.2f}°C")  # Debugging statement
         await channel.send(file=discord.File(video_path))
 
 # Keep the bot alive with a webserver
