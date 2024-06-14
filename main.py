@@ -35,11 +35,12 @@ async def shorts(ctx):
         await ctx.send("Error: Unable to fetch weather data.")
         return
 
-    # Determine the video path based on the temperature at 10 AM Israel time the next day
-    temperature = get_temperature_at_7am_utc(weather_data, next_day=True)
-    video_path = get_video_path(temperature)
+    # Determine the average temperature for the afternoon the next day
+    average_temp, forecast_date = get_afternoon_average_temp(weather_data, next_day=True)
+    video_path = get_video_path(average_temp)
 
     # Send the video as a message
+    await ctx.send(f"The average temperature for the afternoon (12 PM to 6 PM) on {forecast_date} in Israel will be {average_temp:.2f}°C.")
     await ctx.send(file=discord.File(video_path))
 
 # Function to fetch weather data from WeatherAPI
@@ -56,16 +57,26 @@ def get_weather(next_day=False):
 
     return data
 
-# Function to get temperature at 7 AM UTC (10 AM Israel time)
-def get_temperature_at_7am_utc(weather_data, next_day=False):
+# Function to get average temperature for the afternoon (12 PM to 6 PM Israel time, 9 AM to 3 PM UTC)
+def get_afternoon_average_temp(weather_data, next_day=False):
     # Determine the correct forecast day
     forecast_day = 1 if next_day else 0
 
-    # Find the forecast for 7 AM UTC (10 AM Israel time)
+    # Define the hours for the afternoon in UTC
+    afternoon_hours_utc = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
+
+    # Collect temperatures for the specified hours
+    temperatures = []
     for hour in weather_data['forecast']['forecastday'][forecast_day]['hour']:
-        if hour['time'].endswith('07:00'):
-            return hour['temp_c']
-    return None
+        hour_time = hour['time'].split(' ')[1]
+        if hour_time in afternoon_hours_utc:
+            temperatures.append(hour['temp_c'])
+
+    # Calculate the average temperature
+    if temperatures:
+        average_temp = sum(temperatures) / len(temperatures)
+        return average_temp, weather_data['forecast']['forecastday'][forecast_day]['date']
+    return None, None
 
 # Function to get video path based on temperature
 def get_video_path(temperature):
@@ -97,14 +108,12 @@ async def daily_shorts():
             await channel.send("Error: Unable to fetch weather data.")
             return
 
-        # Determine the video path based on the temperature at 7 AM UTC (10 AM Israel time)
-        temperature = get_temperature_at_7am_utc(weather_data)
-        video_path = get_video_path(temperature)
+        # Determine the average temperature for the afternoon
+        average_temp, forecast_date = get_afternoon_average_temp(weather_data)
+        video_path = get_video_path(average_temp)
 
         # Send the video as a message with the specified text
-        date_str = datetime.utcnow().strftime("%Y-%m-%d")
-        await channel.send("----------------------------------------------------")
-        await channel.send(f"                                    {date_str}                                      ")
+        await channel.send(f"The average temperature for the afternoon (12 PM to 6 PM) on {forecast_date} in Israel will be {average_temp:.2f}°C.")
         await channel.send(file=discord.File(video_path))
 
 # Keep the bot alive with a webserver
