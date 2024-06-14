@@ -40,7 +40,8 @@ async def shorts(ctx):
     video_path = get_video_path(average_temp)
 
     # Send the video as a message
-    await ctx.send(f"The average temperature for the afternoon (12 PM to 6 PM) on {forecast_date} in Israel will be {average_temp:.2f}°C.")
+    formatted_date = datetime.strptime(forecast_date, "%Y-%m-%d").strftime("%d/%m/%Y")
+    await ctx.send(f"{formatted_date}")
     await ctx.send(file=discord.File(video_path))
 
 # Function to fetch weather data from WeatherAPI
@@ -80,13 +81,18 @@ def get_afternoon_average_temp(weather_data, next_day=False):
 
 # Function to get video path based on temperature
 def get_video_path(temperature):
+    print(f"Calculated average temperature: {temperature}°C")  # Debugging statement
     if temperature >= 30:
+        print("Selected video: very_hot.mp4")  # Debugging statement
         return "very_hot.mp4"  # Local path to the "very hot" video
     elif temperature >= 24:
+        print("Selected video: hot.mp4")  # Debugging statement
         return "hot.mp4"  # Local path to the "hot" video
     elif temperature < 15:
+        print("Selected video: very_cold.mp4")  # Debugging statement
         return "very_cold.mp4"  # Local path to the "very cold" video
     else:
+        print("Selected video: cold.mp4")  # Debugging statement
         return "cold.mp4"  # Local path to the "cold" video
 
 # Task to send the video every day at 4 AM UTC
@@ -113,7 +119,8 @@ async def daily_shorts():
         video_path = get_video_path(average_temp)
 
         # Send the video as a message with the specified text
-        await channel.send(f"The average temperature for the afternoon (12 PM to 6 PM) on {forecast_date} in Israel will be {average_temp:.2f}°C.")
+        formatted_date = datetime.strptime(forecast_date, "%Y-%m-%d").strftime("%d/%m/%Y")
+        await channel.send(f"{formatted_date}")
         await channel.send(file=discord.File(video_path))
 
 # Keep the bot alive with a webserver
