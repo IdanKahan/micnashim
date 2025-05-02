@@ -11,4 +11,4 @@ It sends a **funny video** every day at **6:00 AM** in a specified channel, base
 - 🌤️ Uses a **weather API** to check the forecast.
 - 🌡️ Decides if it's a good day for shorts based on **temperature**.
 - 📹 Sends a **video** corresponding to the answer in the channel.
-- 🚶 Uses a webserver so it can be pinged easily and be kept alive 24/7
+- 🚶 Uses a webserver so it can be pinged easily and be kept **alive 24/7**
